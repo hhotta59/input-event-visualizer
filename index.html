@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Event Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Input Event Visualizer</h1>
+        <p>IMEの動作やあらゆるinputイベントを可視化します</p>
+        
+        <div class="input-section">
+            <div class="controls">
+                <label for="input-type">Type:</label>
+                <select id="input-type">
+                    <option value="text">text</option>
+                    <option value="password">password</option>
+                    <option value="email">email</option>
+                    <option value="number">number</option>
+                    <option value="tel">tel</option>
+                    <option value="url">url</option>
+                    <option value="search">search</option>
+                </select>
+                
+                <label for="input-mode">Inputmode:</label>
+                <select id="input-mode">
+                    <option value="">none</option>
+                    <option value="text">text</option>
+                    <option value="numeric">numeric</option>
+                    <option value="decimal">decimal</option>
+                    <option value="tel">tel</option>
+                    <option value="email">email</option>
+                    <option value="url">url</option>
+                    <option value="search">search</option>
+                </select>
+                
+                <button id="clear-events">Clear Events</button>
+            </div>
+            
+            <div class="input-container">
+                <label for="test-input">Test Input:</label>
+                <input type="text" id="test-input" placeholder="ここに入力してください">
+            </div>
+        </div>
+        
+        <div class="events-section">
+            <h2>Events Log</h2>
+            <div id="events-container"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

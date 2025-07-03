@@ -1,0 +1,22 @@
+{
+  "name": "input-event-visualizer",
+  "version": "1.0.0",
+  "description": "A tool to visualize all input events and IME behavior",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "build": "echo 'No build process needed for static site'"
+  },
+  "keywords": [
+    "input",
+    "events",
+    "ime",
+    "visualization",
+    "html"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
