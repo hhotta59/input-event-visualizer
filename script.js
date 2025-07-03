@@ -68,13 +68,19 @@ class InputEventVisualizer {
             selectionEnd: this.testInput.selectionEnd
         };
         
-        if (event.key !== undefined) data.key = event.key;
+        if (event.key !== undefined) {
+            data.key = event.key;
+            data.keyByteType = this.getByteType(event.key);
+        }
         if (event.code !== undefined) data.code = event.code;
         if (event.keyCode !== undefined) data.keyCode = event.keyCode;
         if (event.which !== undefined) data.which = event.which;
         if (event.charCode !== undefined) data.charCode = event.charCode;
         if (event.inputType !== undefined) data.inputType = event.inputType;
-        if (event.data !== undefined) data.data = event.data;
+        if (event.data !== undefined) {
+            data.data = event.data;
+            data.dataByteType = this.getByteType(event.data);
+        }
         if (event.isComposing !== undefined) data.isComposing = event.isComposing;
         if (event.ctrlKey !== undefined) data.ctrlKey = event.ctrlKey;
         if (event.shiftKey !== undefined) data.shiftKey = event.shiftKey;
@@ -86,7 +92,42 @@ class InputEventVisualizer {
             data.clipboardData = event.clipboardData.getData('text');
         }
         
+        data.valueByteInfo = this.analyzeValueBytes(this.testInput.value);
+        
         return data;
+    }
+    
+    getByteType(char) {
+        if (!char || char.length === 0) return null;
+        
+        const code = char.charCodeAt(0);
+        if (code <= 0x7F) {
+            return '1byte';
+        } else {
+            return '2byte';
+        }
+    }
+    
+    analyzeValueBytes(value) {
+        if (!value) return { total: 0, oneByte: 0, twoByte: 0 };
+        
+        let oneByte = 0;
+        let twoByte = 0;
+        
+        for (let i = 0; i < value.length; i++) {
+            const code = value.charCodeAt(i);
+            if (code <= 0x7F) {
+                oneByte++;
+            } else {
+                twoByte++;
+            }
+        }
+        
+        return {
+            total: value.length,
+            oneByte,
+            twoByte
+        };
     }
     
     createEventElement(eventType, eventData) {
