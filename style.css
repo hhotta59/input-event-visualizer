@@ -71,6 +71,14 @@ p {
     background: #c0392b;
 }
 
+#copy-events {
+    background: #27ae60;
+}
+
+#copy-events:hover {
+    background: #219a52;
+}
+
 .input-container {
     display: flex;
     flex-direction: column;

@@ -5,6 +5,7 @@ class InputEventVisualizer {
         this.inputTypeSelect = document.getElementById('input-type');
         this.inputModeSelect = document.getElementById('input-mode');
         this.clearButton = document.getElementById('clear-events');
+        this.copyButton = document.getElementById('copy-events');
         
         this.init();
     }
@@ -47,6 +48,10 @@ class InputEventVisualizer {
         
         this.clearButton.addEventListener('click', () => {
             this.eventsContainer.innerHTML = '';
+        });
+        
+        this.copyButton.addEventListener('click', () => {
+            this.copyEventsToClipboard();
         });
     }
     
@@ -153,6 +158,30 @@ class InputEventVisualizer {
             .filter(([key, value]) => value !== undefined && value !== null && value !== '')
             .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
             .join(', ');
+    }
+    
+    copyEventsToClipboard() {
+        const eventItems = this.eventsContainer.querySelectorAll('.event-item');
+        if (eventItems.length === 0) {
+            alert('コピーするイベントがありません');
+            return;
+        }
+        
+        const eventTexts = Array.from(eventItems).map(item => {
+            const time = item.querySelector('.event-time').textContent;
+            const type = item.querySelector('.event-type').textContent;
+            const data = item.querySelector('.event-data').textContent;
+            return `[${time}] ${type}: ${data}`;
+        });
+        
+        const allText = eventTexts.join('\n');
+        
+        navigator.clipboard.writeText(allText).then(() => {
+            alert(`${eventItems.length}個のイベントをクリップボードにコピーしました`);
+        }).catch(err => {
+            console.error('コピーに失敗しました:', err);
+            alert('コピーに失敗しました');
+        });
     }
 }
 
